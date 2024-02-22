@@ -19,9 +19,6 @@ class RobottiData:
         self.speed = speed
         self.time = time
 
-muuttujat = []
-
-
 @app.route('/')
 def index():
    print('Request for index page received')
@@ -52,7 +49,6 @@ def apirobotics():
     db.session.add(new_data_piste)
     db.session.commit()
 
-    muuttujat.append(RobottiData(nopeus, aika))
     return "Kiitos viestistäsi!"
 
 @app.route('/robotics/data')
