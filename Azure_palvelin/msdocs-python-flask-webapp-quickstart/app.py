@@ -3,7 +3,16 @@ import os
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for, json)
 
+from flask_sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'
+db = SQLAlchemy(app)
+
+class DataPiste(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    aika = db.Column(db.String(80), unique=True, nullable=False)
+    nopeus = db.Column(db.String(120), nullable=False)
 
 class RobottiData:
     def __init__(self, speed, time):
