@@ -11,8 +11,8 @@ db = SQLAlchemy(app)
 
 class DataPiste(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    aika = db.Column(db.String(80), unique=True, nullable=False)
-    nopeus = db.Column(db.String(120), nullable=False)
+    time = db.Column(db.String(80), unique=True, nullable=False)
+    speed = db.Column(db.String(120), nullable=False)
 
 class RobottiData:
     def __init__(self, speed, time):
@@ -47,6 +47,10 @@ def hello():
 def apirobotics():
     nopeus = request.form.get("tcp_speed")
     aika = request.form.get("time")
+
+    new_data_piste = DataPiste(time = str(aika), speed = str(nopeus))
+    db.session.add(new_data_piste)
+    db.session.commit()
 
     muuttujat.append(RobottiData(nopeus, aika))
     return "Kiitos viestistäsi!"
