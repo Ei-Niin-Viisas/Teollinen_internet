@@ -57,7 +57,19 @@ def apirobotics():
 
 @app.route('/robotics/data')
 def data():
-    return render_template('roboticsData.html', entries = json.dumps([ob.__dict__ for ob in muuttujat]))
+    lista = []
+
+    all_data = DataPiste.query.filter(DataPiste.speed != 0).all()
+    laskuri = 0
+
+    for data in all_data:
+        d = RobottiData(data.speed, data.time)
+        lista.append(d)
+        laskuri += 1
+        if laskuri == 15:
+            break
+
+    return render_template('roboticsData.html', entries = json.dumps([ob.__dict__ for ob in lista]))
 
 if __name__ == '__main__':
    app.run()
