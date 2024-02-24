@@ -55,8 +55,9 @@ def apirobotics():
 def data():
     lista = []
 
-    all_data = DataPiste.query.filter(DataPiste.speed != 0).all()
+    all_data = DataPiste.query.filter(DataPiste.speed != 0).order_by(DataPiste.time).all()
     laskuri = 0
+    all_data.reverse()
 
     for data in all_data:
         d = RobottiData(data.speed, data.time)
